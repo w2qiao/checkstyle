@@ -1,6 +1,6 @@
 Add `allowMultipleEmptyLinesInsideFile` checker in `src/main/java/com/puppycrawl/tools/checkstyle/checks/whitespace/EmptyLineSeparatorCheck.java`
         
-The already existing rules for empty line checkers : 
+The three already existing rules for empty line checkers : 
 
 - allowNoEmptyLineBetweenFields = true： Allow no empty line between fields.
 - allowMultipleEmptyLines = true: Allow multiple empty lines between class members.
@@ -9,7 +9,7 @@ The already existing rules for empty line checkers :
 The existing checker doesn't check empty lines after class definition and the last class member. A workaround is to add 
 add `allowMultipleEmptyLinesInsideFile` checker to check all multiple empty lines inside a class file.
 
-For EVERY redundant empty line, these four checkers will report a warning using `getEmptyLinesToLog` method in `EmptyLineSeparatorCheck.java`. 
+For EVERY redundant empty lines, these four checkers will report a warning using `getEmptyLinesToLog` method in `EmptyLineSeparatorCheck.java`. 
 
 How to use?
 1. Add the following rule to xml file.
