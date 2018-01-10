@@ -355,6 +355,9 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
         }
     }
 
+    /**
+     * Log violation in case there are multiple empty lines inside class file.
+     */
     private void processMultipleLinesInsideFile(){
         // Get empty lines
         final FileContents fileContents = getFileContents();
