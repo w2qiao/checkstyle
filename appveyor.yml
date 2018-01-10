@@ -10,7 +10,7 @@ skip_commits:
     - fast-forward-merge.sh
     - LICENSE
     - LICENSE.apache20
-    - README.md
+    - README_origin.md
     - release.sh
     - RIGHTS.antlr
     - shippable.yml

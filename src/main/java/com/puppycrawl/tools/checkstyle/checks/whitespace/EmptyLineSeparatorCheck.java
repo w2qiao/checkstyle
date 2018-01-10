@@ -20,6 +20,7 @@
 package com.puppycrawl.tools.checkstyle.checks.whitespace;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.puppycrawl.tools.checkstyle.StatelessCheck;
@@ -228,6 +229,9 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
     /** Allows multiple empty lines inside class members. */
     private boolean allowMultipleEmptyLinesInsideClassMembers = true;
 
+    /** Allows multiple empty lines inside file. */
+    private boolean allowMultipleEmptyLinesInsideFile = true;
+
     /**
      * Allow no empty line between fields.
      * @param allow
@@ -251,6 +255,14 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
      */
     public void setAllowMultipleEmptyLinesInsideClassMembers(boolean allow) {
         allowMultipleEmptyLinesInsideClassMembers = allow;
+    }
+
+    /**
+     * Allow multiple empty lines inside file.
+     * @param allow User's value.
+     */
+    public void setAllowMultipleEmptyLinesInsideFile(boolean allow) {
+        allowMultipleEmptyLinesInsideFile = allow;
     }
 
     @Override
@@ -291,6 +303,9 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
         }
         if (!allowMultipleEmptyLinesInsideClassMembers) {
             processMultipleLinesInside(ast);
+        }
+        if (!allowMultipleEmptyLinesInsideFile) {
+            processMultipleLinesInsideFile();
         }
 
         DetailAST nextToken = ast.getNextSibling();
@@ -339,6 +354,24 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
                 log(lineNo + 1, MSG_MULTIPLE_LINES_INSIDE);
             }
         }
+    }
+
+    private void processMultipleLinesInsideFile(){
+        // Get empty lines
+        final FileContents fileContents = getFileContents();
+        final List<Integer> emptyLines = new ArrayList<>();
+        for(int lineNo = 0; lineNo < fileContents.getText().size(); lineNo++) {
+            if(fileContents.lineIsBlank(lineNo)) {
+                emptyLines.add(lineNo);
+            }
+        }
+
+        // Log empty lines
+        final List<Integer> emptyLinesToLog = getEmptyLinesToLog(emptyLines);
+        for(Integer lineNo : emptyLinesToLog){
+            log(lineNo + 1, MSG_MULTIPLE_LINES_INSIDE);
+        }
+
     }
 
     /**
