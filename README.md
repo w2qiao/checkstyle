@@ -10,7 +10,7 @@ Add the following rule to xml file.
         <property name="message" value="Unnecessary consecutive lines"/>
     </module>
     
-This will log a warning before the beginning of every two consecutive lines. But be careful to use regex match because the asymptotic complexity(or Big O) could be expotional, see [here](https://www.regular-expressions.info/catastrophic.html) 
+This will log a warning before the beginning of every three consecutive lines. But be careful to use regex match because the asymptotic complexity(or Big O) could be expotional, see [here](https://www.regular-expressions.info/catastrophic.html). Besides, there is a stackoverflow risk at `java.util.regex.Pattern`, see [here](https://github.com/checkstyle/checkstyle/blob/90f20e09869c71eb22190ad9c1d46d5deec324a5/src/main/java/com/puppycrawl/tools/checkstyle/checks/regexp/MultilineDetector.java#L114) 
 
 ## AST analysis
 
