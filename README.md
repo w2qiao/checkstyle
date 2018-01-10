@@ -14,8 +14,6 @@ This will log a warning before the beginning of every two consecutive lines
 
 ## AST analysis
 
-Add `allowMultipleEmptyLinesInsideFile` checker in `src/main/java/com/puppycrawl/tools/checkstyle/checks/whitespace/EmptyLineSeparatorCheck.java`
-        
 The three already existing rules for empty line checkers : 
 
 - allowNoEmptyLineBetweenFields = true： Allow no empty line between fields.
@@ -27,7 +25,7 @@ For EVERY redundant empty lines, these checkers will report a warning using `get
 The existing checker doesn't check empty lines after class definition and the last class member. A workaround is to add 
 add `allowMultipleEmptyLinesInsideFile` checker to check all multiple empty lines inside a class file.
 
-Note: `allowMultipleEmptyLinesInsideFile` works the same as regex match way, but this will log warnings at EVERY redundant empty lines.
+Note: `allowMultipleEmptyLinesInsideFile` works the same as regex match way, but it will log warnings at EVERY redundant empty lines.
 
 How to use?
 1. Add the following rule to xml file.
