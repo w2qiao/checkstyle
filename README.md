@@ -1,4 +1,4 @@
-# Two ways of check empty line: Regex match or AST analysis.
+# Two ways of check redundant empty lines: Regex match or AST analysis.
 
 ## Regex match:
 
