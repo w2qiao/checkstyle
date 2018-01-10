@@ -22,7 +22,7 @@ The three already existing rules for empty line checkers :
 
 For EVERY redundant empty lines, these checkers will report a warning using `getEmptyLinesToLog` method in `EmptyLineSeparatorCheck.java`. 
 
-The existing checker doesn't check empty lines after class definition and the last class member. A workaround is to add 
+The existing checker doesn't check empty lines after class definition and the last class member. A workaround is to 
 add `allowMultipleEmptyLinesInsideFile` checker to check all multiple empty lines inside a class file.
 
 Note: `allowMultipleEmptyLinesInsideFile` works the same as regex match way, but it will log warnings at EVERY redundant empty lines.
