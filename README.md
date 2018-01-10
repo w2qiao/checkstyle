@@ -1,3 +1,19 @@
+#Two ways of check empty line: Regex match or AST analysis.
+
+## Regex match:
+
+Add the following rule to xml file.
+
+    <module name="RegexpMultiline">
+        <property name="format" value="\r?\n[\t ]*\r?\n[\t ]*\r?\n"/>
+        <property name="fileExtensions" value="java,xml,properties"/>
+        <property name="message" value="Unnecessary consecutive lines"/>
+    </module>
+    
+This will log a warning before the beginning of every two consecutive lines
+
+## AST analysis
+
 Add `allowMultipleEmptyLinesInsideFile` checker in `src/main/java/com/puppycrawl/tools/checkstyle/checks/whitespace/EmptyLineSeparatorCheck.java`
         
 The three already existing rules for empty line checkers : 
@@ -6,16 +22,19 @@ The three already existing rules for empty line checkers :
 - allowMultipleEmptyLines = true: Allow multiple empty lines between class members.
 - allowMultipleEmptyLinesInsideClassMembers = true: Allow multiple empty lines inside class members.
 
+For EVERY redundant empty lines, these checkers will report a warning using `getEmptyLinesToLog` method in `EmptyLineSeparatorCheck.java`. 
+
 The existing checker doesn't check empty lines after class definition and the last class member. A workaround is to add 
 add `allowMultipleEmptyLinesInsideFile` checker to check all multiple empty lines inside a class file.
 
-For EVERY redundant empty lines, these four checkers will report a warning using `getEmptyLinesToLog` method in `EmptyLineSeparatorCheck.java`. 
+Note: `allowMultipleEmptyLinesInsideFile` works the same as regex match way, but this will log warnings at EVERY redundant empty lines.
 
 How to use?
 1. Add the following rule to xml file.
-
-        <module name="EmptyLineSeparator">
-            <property name="allowMultipleEmptyLinesInsideFile" value="true"/>
+        <module name="TreeWalker">
+            <module name="EmptyLineSeparator">
+                <property name="allowMultipleEmptyLinesInsideFile" value="true"/>
+            </module>
         </module>
 
 2. Complile checkstyle, use `mvn clean package -Passembly`,
