@@ -21,4 +21,3 @@ How to use?
 2. Complile checkstyle, use `mvn clean package -Passembly`,
 3. Run java -jar checkstyle-8.8-SNAPSHOT-all.jar -c check_rule.xml Main.java 
 Or download checkstyle-8.8-SNAPSHOT-all.jar check_rule.xml Main.java from [here](https://drive.google.com/open?id=1mTSimwVIztRT3Ma-c1ct_gypgplgx2hY)
-
