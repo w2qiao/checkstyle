@@ -10,7 +10,7 @@ Add the following rule to xml file.
         <property name="message" value="Unnecessary consecutive lines"/>
     </module>
     
-This will log a warning before the beginning of every two consecutive lines. But be careful to use regex match because the asymptotic complexity(or Big O) could be expotional, see (here)[https://www.regular-expressions.info/catastrophic.html] 
+This will log a warning before the beginning of every two consecutive lines. But be careful to use regex match because the asymptotic complexity(or Big O) could be expotional, see [here](https://www.regular-expressions.info/catastrophic.html) 
 
 ## AST analysis
 
