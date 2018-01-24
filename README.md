@@ -10,12 +10,10 @@ Add the following rule to xml file.
         <property name="message" value="Unnecessary consecutive lines"/>
     </module>
     
-This will log a warning before the beginning of every two consecutive lines
+This will log a warning before the beginning of every two consecutive lines. But be careful to use regex match because the asymptotic complexity(or Big O) could be expotional, see [here](https://www.regular-expressions.info/catastrophic.html). Besides, there is a stackoverflow risk at `java.util.regex.Pattern`, see [here](https://github.com/checkstyle/checkstyle/blob/90f20e09869c71eb22190ad9c1d46d5deec324a5/src/main/java/com/puppycrawl/tools/checkstyle/checks/regexp/MultilineDetector.java#L114) 
 
 ## AST analysis
 
-Add `allowMultipleEmptyLinesInsideFile` checker in `src/main/java/com/puppycrawl/tools/checkstyle/checks/whitespace/EmptyLineSeparatorCheck.java`
-        
 The three already existing rules for empty line checkers : 
 
 - allowNoEmptyLineBetweenFields = true： Allow no empty line between fields.
@@ -24,10 +22,10 @@ The three already existing rules for empty line checkers :
 
 For EVERY redundant empty lines, these checkers will report a warning using `getEmptyLinesToLog` method in `EmptyLineSeparatorCheck.java`. 
 
-The existing checker doesn't check empty lines after class definition and the last class member. A workaround is to add 
+The existing checker doesn't check empty lines after class definition and the last class member. A workaround is to 
 add `allowMultipleEmptyLinesInsideFile` checker to check all multiple empty lines inside a class file.
 
-Note: `allowMultipleEmptyLinesInsideFile` works the same as regex match way, but this will log warnings at EVERY redundant empty lines.
+Note: `allowMultipleEmptyLinesInsideFile` works the same as regex match way, but it will log warnings at EVERY redundant empty lines.
 
 How to use?
 1. Add the following rule to xml file.
