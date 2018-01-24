@@ -40,3 +40,25 @@ How to use?
 2. Complile checkstyle, use `mvn clean package -Passembly`,
 3. Run java -jar checkstyle-8.8-SNAPSHOT-all.jar -c check_rule.xml Main.java 
 Or download checkstyle-8.8-SNAPSHOT-all.jar check_rule.xml Main.java from [here](https://drive.google.com/open?id=1mTSimwVIztRT3Ma-c1ct_gypgplgx2hY)
+
+# Check potentail hard code or magic number
+
+A potential hard code is a integer or float number(except 0 and 1) used not in assignment expression. 
+For example, 
+
+`fooMethod(123, 456)`, `if(bar == 23762816)`, tokens like `123` `456` `23762816` are considered hard code,
+These magic numbers sometimes could be confusing when reading codes.
+
+add `allowNumNotInAssign` in `IllegalTokenTextCheck.java` to check these magic number as potential hard code.
+
+How to use?
+1. Add the following rule to xml file
+    <module name="TreeWalker">
+        <module name="IllegalTokenText">
+            <property name="tokens" value="NUM_INT, NUM_FLOAT, NUM_DOUBLE, NUM_LONG"/>
+            <property name="allowNumNotInAssign" value="false"/>
+        </module>
+    </module>
+2. Complile checkstyle, use `mvn clean package -Passembly`,
+3. Run java -jar checkstyle-8.8-SNAPSHOT-all.jar -c check_rule.xml Main.java 
+Or download files from [here](https://drive.google.com/open?id=1KD2ajzfeI2uHsXQcFt1ly9QuUpgxiFG_)

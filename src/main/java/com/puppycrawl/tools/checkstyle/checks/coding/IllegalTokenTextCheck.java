@@ -63,6 +63,12 @@ public class IllegalTokenTextCheck
     public static final String MSG_KEY = "illegal.token.text";
 
     /**
+     * A key is pointing to the warning message text illegal.token.num in "messages.properties"
+     * file.
+     */
+    public static final String MSG_NUM_NOT_IN_ASSIGN = "illegal.token.num";
+
+    /**
      * Custom message for report if illegal regexp found
      * ignored if empty.
      */
@@ -76,6 +82,8 @@ public class IllegalTokenTextCheck
 
     /** {@code true} if the casing should be ignored. */
     private boolean ignoreCase;
+
+    private boolean allowNumNotInAssign = true;
 
     @Override
     public int[] getDefaultTokens() {
@@ -109,6 +117,9 @@ public class IllegalTokenTextCheck
     @Override
     public void visitToken(DetailAST ast) {
         final String text = ast.getText();
+        if (!allowNumNotInAssign) {
+            processNumNotInAssign(ast);
+        }
         if (format.matcher(text).find()) {
             String customMessage = message;
             if (customMessage.isEmpty()) {
@@ -120,6 +131,31 @@ public class IllegalTokenTextCheck
                 customMessage,
                 formatString);
         }
+    }
+
+    private void processNumNotInAssign(DetailAST ast) {
+        DetailAST parent = ast.getParent();
+        if (isNumCheck(ast)) {
+            if ("0".equals(ast.getText()) || "1".equals(ast.getText())) return;
+            while (parent != null && parent.getType() != TokenTypes.CLASS_DEF) {
+                if (parent.getType() == TokenTypes.ASSIGN) break;
+                if (parent.getType() == TokenTypes.METHOD_DEF) {
+                    log(ast.getLineNo(),
+                            ast.getColumnNo(),
+                            MSG_NUM_NOT_IN_ASSIGN,
+                            ast.getText());
+                    break;
+                }
+                parent = parent.getParent();
+            }
+        }
+    }
+
+    private boolean isNumCheck(DetailAST ast) {
+        return ast.getType() == TokenTypes.NUM_LONG
+                || ast.getType() == TokenTypes.NUM_FLOAT
+                || ast.getType() == TokenTypes.NUM_DOUBLE
+                || ast.getType() == TokenTypes.NUM_INT;
     }
 
     /**
@@ -154,6 +190,14 @@ public class IllegalTokenTextCheck
     public void setIgnoreCase(boolean caseInsensitive) {
         ignoreCase = caseInsensitive;
         updateRegexp();
+    }
+
+    /**
+     * Set whether or not the match is case sensitive.
+     * @param allowNumNotInAssign false if not allow num literal in method except assign expression.
+     */
+    public void setAllowNumNotInAssign(boolean allowNumNotInAssign) {
+        this.allowNumNotInAssign = allowNumNotInAssign;
     }
 
     /**
